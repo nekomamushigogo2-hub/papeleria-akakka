@@ -1,0 +1,186 @@
+/* historial.css — Historial de ventas, productos, compras registradas, modal y factura imprimible.
+   (Los estilos de "Ventas abiertas" del panel de venta están en invoice.css) */
+
+/* ---- Secciones de módulo (mismo aspecto que Compras y Entidades) ---- */
+.modulo-section {
+  grid-column: 1 / -1;
+  background: var(--color-card);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  padding: 20px;
+}
+
+.modulo-section h2,
+.subseccion h2 {
+  font-family: var(--font-display);
+  margin: 0;
+}
+
+.modulo-titulo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.modulo-titulo-acciones { display: flex; gap: 8px; }
+
+.subseccion {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-line);
+}
+
+.subseccion h2 { font-size: 1.1rem; }
+
+/* ---- Filtros ---- */
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+  margin-bottom: 12px;
+}
+
+.filtros .campo { flex: 1; min-width: 150px; }
+
+/* ---- Listas de registros ---- */
+.registro-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.registro-fila {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: var(--color-paper);
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  font-size: 0.85rem;
+}
+
+.registro-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.registro-info strong { font-family: var(--font-display); color: var(--color-ink); }
+.registro-info span { color: var(--color-ink-soft); font-size: 0.8rem; }
+
+.registro-acciones { display: flex; gap: 6px; flex-shrink: 0; }
+
+.btn-eliminar-producto { color: #DC2626; }
+
+/* ---- Modal grande (reutiliza .modal-overlay y .modal-card de header.css) ---- */
+.modal-card.modal-grande {
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  text-align: left;
+}
+
+.form-modal { display: flex; flex-direction: column; gap: 12px; }
+.form-modal-fila { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.check-linea {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--color-ink);
+  cursor: pointer;
+}
+
+/* ---- Factura y detalle de compra ---- */
+.factura-encabezado {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed var(--color-line);
+}
+
+.factura-encabezado img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; }
+.factura-encabezado h3 { margin: 0; }
+
+.factura-datos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 12px;
+  margin: 12px 0;
+}
+
+.factura-datos p { font-size: 0.82rem; color: var(--color-ink); }
+
+.tabla-scroll { overflow-x: auto; }
+
+.tabla-detalle {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  color: var(--color-ink);
+}
+
+.tabla-detalle th,
+.tabla-detalle td {
+  padding: 6px 4px;
+  border-bottom: 1px solid var(--color-line);
+  text-align: left;
+}
+
+.tabla-detalle th { color: var(--color-ink-soft); font-weight: 600; }
+.tabla-detalle .num { text-align: right; white-space: nowrap; }
+
+.factura-doc .invoice-totals { margin-top: 12px; }
+
+.factura-gracias {
+  text-align: center;
+  margin-top: 12px !important;
+  font-style: italic;
+}
+
+/* ---- Móvil ---- */
+@media (max-width: 600px) {
+  .registro-fila { flex-direction: column; align-items: stretch; }
+  .registro-acciones { justify-content: flex-end; }
+  .form-modal-fila,
+  .factura-datos { grid-template-columns: 1fr; }
+  .modulo-titulo-acciones { width: 100%; justify-content: flex-end; }
+}
+
+/* ---- Imprimir / Guardar como PDF: solo se imprime la factura ---- */
+@media print {
+  body { background: #fff !important; }
+  body > *:not(#modal) { display: none !important; }
+
+  #modal {
+    position: static;
+    background: none;
+    backdrop-filter: none;
+    display: block;
+  }
+
+  #modal .modal-card {
+    max-width: 100%;
+    max-height: none;
+    width: 100%;
+    border: none;
+    box-shadow: none;
+    background: #fff;
+    color: #000;
+  }
+
+  #modal * { color: #000 !important; }
+  .no-imprimir { display: none !important; }
+}
